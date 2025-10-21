@@ -1,9 +1,0 @@
-@import "tailwindcss/preflight";
-@tailwind utilities;
-
-/* Optional: Custom font or overrides */
-body {
-  background-color: #000;
-  color: #fff;
-  font-weight: bold;
-}
