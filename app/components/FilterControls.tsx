@@ -53,7 +53,7 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             <option value="">All Prices</option>
             <option value="low">Low ($0 - $1000)</option>
             <option value="medium">Medium ($1001 - $5000)</option>
-            <option value="high">High (>$5000)</option>
+            <option value="high">High ($5000)</option>
           </select>
         </div>
       </div>
