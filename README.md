@@ -1,30 +1,43 @@
+
 # BridalEcon 🌍💍
 
-**BridalEcon** is a Next.js-powered web application that explores the economics of weddings around the world. From average venue costs in Tokyo to floral budgets in Paris, BridalEcon aims to visualize and compare wedding expenses across regions using interactive data tools—including a **3D globe** for immersive global insights.
+**BridalEcon** is a data-driven exploration of **bride price** (also known as bride wealth or lobola) practices around the world. This project visualizes the economic, cultural, and regional dimensions of bride price through interactive tools—including a **3D globe** that maps customs, values, and trends across countries and communities.
 
-> 💡 **Note**: This project is in early development. The current codebase is a Next.js starter template. Core features—including the 3D globe—are actively being prototyped.
+> 💡 **Note**: This project is in early development. Core features—including the 3D globe and data visualizations—are under active development.
 
-## 🌐 Vision & Features (In Progress)
+## 🌐 What Is Bride Price?
 
-- **Interactive 3D Globe**:  
-  Built with libraries like [Three.js](https://threejs.org/) or [React Globe.gl](https://github.com/vasturiano/react-globe.gl), the globe will display regional wedding cost data as clickable, animated markers or heatmaps.
+Bride price is a traditional practice in many societies where the groom or his family provides payment (in cash, livestock, or goods) to the bride’s family as part of formalizing a marriage. It is distinct from dowry and is deeply embedded in social structures, kinship systems, and gender economics.
 
-- **Regional Cost Breakdowns**:  
-  Compare average spending on dresses, venues, catering, and more—filtered by country or city.
+BridalEcon aims to:
+- Document regional variations in bride price customs
+- Analyze economic implications (e.g., inflation, commercialization, gender equity)
+- Visualize data through an interactive **3D globe**
+- Provide historical and anthropological context
 
-- **Personalized Budget Planner**:  
-  Input your preferences and location to generate a tailored wedding budget.
+## 🗺️ Features
 
-- **Trend Analysis**:  
-  Track how wedding costs have changed over time due to inflation, cultural shifts, or economic conditions.
+- **Interactive 3D Globe**  
+  Built with [Three.js](https://threejs.org/) or [React Globe.gl](https://github.com/vasturiano/react-globe.gl), showing:
+  - Countries where bride price is practiced
+  - Average values (adjusted for inflation/local currency)
+  - Forms of payment (cattle, cash, land, etc.)
+  - Legal status and modern debates
+
+- **Country & Culture Profiles**  
+  Detailed entries on bride price in Nigeria, South Sudan, Papua New Guinea, China (historical), and more.
+
+- **Timeline & Trends**  
+  How bride price has evolved due to urbanization, migration, and policy changes.
+
+- **Ethical & Gender Analysis**  
+  Links to scholarly research on consent, commodification, and women’s agency.
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Node.js (v18+)
-- Package manager: `npm`, `yarn`, `pnpm`, or `bun`
+This is a [Next.js](https://nextjs.org/) project bootstrapped with `create-next-app`.
 
-### Setup
+### To run locally:
 ```bash
 git clone https://github.com/russzw/bridalecon.git
 cd bridalecon
@@ -32,28 +45,29 @@ npm install
 npm run dev
 ```
 
-Open your browser to [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) in your browser.  
+Edit `app/page.tsx` to begin development.
 
-> You can begin editing the homepage in `app/page.tsx`. The page auto-updates during development.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to load **Geist**, Vercel’s modern font.
 
-## 🛠 Tech Stack
+## 🛠 Tech Stack (Planned)
 
-- **Framework**: [Next.js](https://nextjs.org/) (App Router)
-- **Styling**: Tailwind CSS / CSS Modules
-- **Font**: [Geist](https://vercel.com/font) via `next/font`
-- **3D Visualization**: *With Three.js and Globe.gl*
-- **Deployment**: [Vercel](https://vercel.com)
+- **Framework**: Next.js (App Router)
+- **3D Visualization**: Three.js / React Globe.gl
+- **Styling**: Tailwind CSS
+- **Data**: Public ethnographic sources, academic studies, NGO reports
+- **Deployment**: Vercel
 
-## 📚 Learn More
+## 📚 Resources & Inspiration
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Learn Next.js (Interactive Tutorial)](https://nextjs.org/learn)
-- [Three.js](https://threejs.org/) – for 3D graphics
-- [React Globe.gl Examples](https://github.com/vasturiano/react-globe.gl)
+- [Ethnographic Atlas (Murdock)](https://www.jstor.org/stable/1170661)
+- UN Women reports on marriage customs
+- Academic papers on bride price and gender economics
+- Cultural documentation from African, Melanesian, and Southeast Asian contexts
 
 ## 🤝 Contributing
 
-Ideas, feedback, and contributions are welcome! Open an issue or submit a PR.
+We welcome contributions from anthropologists, developers, data visualizers, and cultural researchers. Please open an issue to discuss ideas or data sources.
 
 ## 📄 License
 
@@ -61,5 +75,5 @@ MIT License — see [LICENSE](./LICENSE).
 
 ---
 
-Made with ❤️ and a sprinkle of tulle.  
-Deployed on [Vercel](bridalecon.vercel.app).
+BridalEcon seeks to inform, not judge—honoring cultural complexity while fostering critical understanding.  
+Built with ❤️ and deployed on [Vercel](bridalecon.vercel.app).
