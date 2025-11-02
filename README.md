@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BridalEcon 🌍💍
 
-## Getting Started
+**BridalEcon** is a Next.js-powered web application that explores the economics of weddings around the world. From average venue costs in Tokyo to floral budgets in Paris, BridalEcon aims to visualize and compare wedding expenses across regions using interactive data tools—including a **3D globe** for immersive global insights.
 
-First, run the development server:
+> 💡 **Note**: This project is in early development. The current codebase is a Next.js starter template. Core features—including the 3D globe—are actively being prototyped.
 
+## 🌐 Vision & Features (In Progress)
+
+- **Interactive 3D Globe**:  
+  Built with libraries like [Three.js](https://threejs.org/) or [React Globe.gl](https://github.com/vasturiano/react-globe.gl), the globe will display regional wedding cost data as clickable, animated markers or heatmaps.
+
+- **Regional Cost Breakdowns**:  
+  Compare average spending on dresses, venues, catering, and more—filtered by country or city.
+
+- **Personalized Budget Planner**:  
+  Input your preferences and location to generate a tailored wedding budget.
+
+- **Trend Analysis**:  
+  Track how wedding costs have changed over time due to inflation, cultural shifts, or economic conditions.
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- Package manager: `npm`, `yarn`, `pnpm`, or `bun`
+
+### Setup
 ```bash
+git clone https://github.com/russzw/bridalecon.git
+cd bridalecon
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open your browser to [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+> You can begin editing the homepage in `app/page.tsx`. The page auto-updates during development.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠 Tech Stack
 
-## Learn More
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: Tailwind CSS / CSS Modules
+- **Font**: [Geist](https://vercel.com/font) via `next/font`
+- **3D Visualization**: *With Three.js and Globe.gl*
+- **Deployment**: [Vercel](https://vercel.com)
 
-To learn more about Next.js, take a look at the following resources:
+## 📚 Learn More
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Learn Next.js (Interactive Tutorial)](https://nextjs.org/learn)
+- [Three.js](https://threejs.org/) – for 3D graphics
+- [React Globe.gl Examples](https://github.com/vasturiano/react-globe.gl)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Contributing
 
-## Deploy on Vercel
+Ideas, feedback, and contributions are welcome! Open an issue or submit a PR.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License — see [LICENSE](./LICENSE).
+
+---
+
+Made with ❤️ and a sprinkle of tulle.  
+Deployed on [Vercel](bridalecon.vercel.app).
