@@ -1,7 +1,4 @@
 {
   "/page": "app/page.js",
-  "/about/page": "app/about/page.js",
-  "/countries/page": "app/countries/page.js",
-  "/api/recommendations/route": "app/api/recommendations/route.js",
-  "/icon.png/route": "app/icon.png/route.js"
+  "/api/recommendations/route": "app/api/recommendations/route.js"
 }

@@ -9,7 +9,8 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
 const getAIRecommendations = async (
   priceFilter: string | null,
-  regionFilter: string | null
+  regionFilter: string | null,
+  selectedCountry: string | null
 ): Promise<string[]> => {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -19,6 +20,7 @@ const getAIRecommendations = async (
     The user has provided the following filters:
     - Price: ${priceFilter || 'Any'}
     - Region: ${regionFilter || 'Any'}
+    - Selected Country: ${selectedCountry || 'None'}
 
     Based on these filters, and the provided bride price data, generate 2-3 engaging and informative recommendations.
     The recommendations should be in the style of interesting facts or helpful tips.
@@ -65,7 +67,7 @@ const getAIRecommendations = async (
     }
 
 
-  } catch (error) {
+  } catch (error) { 
     console.error("Failed to generate recommendations from Gemini:", error);
     // Return some fallback recommendations in case of an error
     return [
@@ -77,12 +79,14 @@ const getAIRecommendations = async (
 };
 
 export async function GET(req: NextRequest) {
+  console.log("GEMINI_API_KEY loaded:", !!process.env.GEMINI_API_KEY);
   const { searchParams } = new URL(req.url);
   const priceFilter = searchParams.get('priceFilter');
   const regionFilter = searchParams.get('regionFilter');
+  const selectedCountry = searchParams.get('selectedCountry');
 
   try {
-    const recommendations = await getAIRecommendations(priceFilter, regionFilter);
+    const recommendations = await getAIRecommendations(priceFilter, regionFilter, selectedCountry);
     return NextResponse.json({ recommendations });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to generate recommendations' }, { status: 500 });

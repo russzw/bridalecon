@@ -7,7 +7,6 @@ import dynamic from "next/dynamic";
 import useResizeObserver from "use-resize-observer";
 import bridePriceData from "../data/bride-price-data.json";
 import CountryDetails from "./CountryDetails";
-import FilterControls from "./FilterControls";
 import Recommendations from "./Recommendations";
 import Contributions from "./Contributions";
 import Loading from "./Loading";
@@ -17,9 +16,8 @@ const Globe = dynamic(() => import("react-globe.gl"), {
   loading: () => <Loading />
 });
 
-const GlobeSection = () => {
+const GlobeSection = ({ search }: { search: string | null }) => {
   const [selectedCountry, setSelectedCountry] = useState<any>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const [regionFilter, setRegionFilter] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
   const [countriesData, setCountriesData] = useState<any>({ features: [] });
@@ -63,8 +61,9 @@ const GlobeSection = () => {
     if (!processedData.length) return [];
 
     return processedData.filter((d:any) => {
-      const searchTermLower = searchTerm.toLowerCase();
+      const searchTermLower = search ? search.toLowerCase() : "";
       const matchesSearch =
+        !search ||
         (d.properties.country && d.properties.country.toLowerCase().includes(searchTermLower)) ||
         (d.properties.description && d.properties.description.toLowerCase().includes(searchTermLower));
 
@@ -82,7 +81,7 @@ const GlobeSection = () => {
 
       return matchesSearch && matchesRegion && matchesPrice;
     });
-  }, [processedData, searchTerm, regionFilter, priceFilter]);
+  }, [processedData, search, regionFilter, priceFilter]);
 
   const maxBridePrice = Math.max(...bridePriceData.map((d) => d.bride_price_usd));
 
@@ -107,18 +106,6 @@ const GlobeSection = () => {
       <div className="container mx-auto">
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-purple-400">Bridal Economics Explorer</h1>
 
-        <div className="mb-12">
-          <FilterControls
-            searchTerm={searchTerm}
-            setSearchTerm={setSearchTerm}
-            regionFilter={regionFilter}
-            setRegionFilter={setRegionFilter}
-            priceFilter={priceFilter}
-            setPriceFilter={setPriceFilter}
-            allRegions={allRegions}
-          />
-        </div>
-
         <div className="flex flex-col items-center gap-12 mb-12">
           <div className="w-full h-[600px] md:h-[800px] rounded-lg overflow-hidden shadow-2xl bg-gray-900" ref={ref}>
             {isLoading ? <Loading /> : <Globe
@@ -142,7 +129,7 @@ const GlobeSection = () => {
         </div>
 
         <div className="mb-12">
-          <Recommendations priceFilter={priceFilter} regionFilter={regionFilter} />
+          <Recommendations priceFilter={priceFilter} regionFilter={regionFilter} selectedCountry={selectedCountry} />
         </div>
 
         <Contributions />

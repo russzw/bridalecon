@@ -6,9 +6,10 @@ import React, { useState, useEffect } from "react";
 interface RecommendationsProps {
   priceFilter: string;
   regionFilter: string;
+  selectedCountry: any;
 }
 
-const Recommendations: React.FC<RecommendationsProps> = ({ priceFilter, regionFilter }) => {
+const Recommendations: React.FC<RecommendationsProps> = ({ priceFilter, regionFilter, selectedCountry }) => {
   const [recommendations, setRecommendations] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +18,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ priceFilter, regionFi
       setLoading(true);
       try {
         const response = await fetch(
-          `/api/recommendations?priceFilter=${priceFilter}&regionFilter=${regionFilter}`
+          `/api/recommendations?priceFilter=${priceFilter}&regionFilter=${regionFilter}&selectedCountry=${selectedCountry ? selectedCountry.country : ''}`
         );
         const data = await response.json();
         if (data.recommendations) {
@@ -30,7 +31,7 @@ const Recommendations: React.FC<RecommendationsProps> = ({ priceFilter, regionFi
     };
 
     fetchRecommendations();
-  }, [priceFilter, regionFilter]);
+  }, [priceFilter, regionFilter, selectedCountry]);
 
   return (
     <div className="mt-8 p-6 rounded-lg bg-purple-900 shadow-lg">
