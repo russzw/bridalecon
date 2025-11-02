@@ -10,8 +10,12 @@ import CountryDetails from "./CountryDetails";
 import FilterControls from "./FilterControls";
 import Recommendations from "./Recommendations";
 import Contributions from "./Contributions";
+import Loading from "./Loading";
 
-const Globe = dynamic(() => import("react-globe.gl"), { ssr: false });
+const Globe = dynamic(() => import("react-globe.gl"), { 
+  ssr: false,
+  loading: () => <Loading />
+});
 
 const GlobeSection = () => {
   const [selectedCountry, setSelectedCountry] = useState<any>(null);
@@ -19,8 +23,9 @@ const GlobeSection = () => {
   const [regionFilter, setRegionFilter] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
   const [countriesData, setCountriesData] = useState<any>({ features: [] });
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { ref, width = 600, height = 600 } = useResizeObserver<HTMLDivElement>();
+  const { ref, width = 800, height = 800 } = useResizeObserver<HTMLDivElement>();
 
   useEffect(() => {
     // Load countries geojson
@@ -28,6 +33,7 @@ const GlobeSection = () => {
       .then(res => res.json())
       .then(countries => {
          setCountriesData(countries);
+         setIsLoading(false);
       });
   }, []);
 
@@ -81,13 +87,14 @@ const GlobeSection = () => {
   const maxBridePrice = Math.max(...bridePriceData.map((d) => d.bride_price_usd));
 
   const getColorByPrice = (price: number) => {
-    if (price === 0) return "grey";
+    if (price === 0) return "#4A4A4A"; // Dark grey for no data
     const normalizedPrice = price / maxBridePrice;
-    if (normalizedPrice <= 0.2) return "green";
-    if (normalizedPrice <= 0.5) return "yellow";
-    if (normalizedPrice <= 0.8) return "orange";
-    return "red";
+    if (normalizedPrice <= 0.2) return "#E6E6FA"; // Lilac
+    if (normalizedPrice <= 0.5) return "#D8BFD8"; // Lighter purple
+    if (normalizedPrice <= 0.8) return "#8A2BE2"; // Purple
+    return "#4B0082"; // Darkest purple
   };
+  
 
   const handleCountryClick = (polygon: any) => {
     setSelectedCountry(polygon.properties);
@@ -96,9 +103,9 @@ const GlobeSection = () => {
   const allRegions = [...new Set(bridePriceData.map((d) => d.region))];
 
   return (
-    <section className="p-4 bg-gray-900 text-white min-h-screen">
+    <section className="p-4 bg-black text-lilac-200 min-h-screen">
       <div className="container mx-auto">
-        <h1 className="text-5xl font-extrabold text-center mb-12 text-yellow-300 tracking-wider">Bridal Economics Explorer</h1>
+        <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-purple-400">Bridal Economics Explorer</h1>
 
         <div className="mb-12">
           <FilterControls
@@ -112,22 +119,23 @@ const GlobeSection = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-          <div className="md:col-span-2 h-[500px] md:h-auto rounded-lg overflow-hidden shadow-2xl" ref={ref}>
-            <Globe
+        <div className="flex flex-col items-center gap-12 mb-12">
+          <div className="w-full h-[600px] md:h-[800px] rounded-lg overflow-hidden shadow-2xl bg-gray-900" ref={ref}>
+            {isLoading ? <Loading /> : <Globe
               width={width}
               height={height}
               globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+              backgroundColor="rgba(0,0,0,0)"
               polygonsData={filteredData}
               polygonAltitude={0.06}
               polygonCapColor={(d: any) => getColorByPrice(d.properties.bride_price_usd)}
-              polygonSideColor={() => "rgba(0, 100, 0, 0.15)"}
+              polygonSideColor={() => "rgba(138, 43, 226, 0.15)"}
               polygonStrokeColor={() => "#111"}
               onPolygonClick={handleCountryClick}
               polygonLabel={({ properties }: any) =>
-                `<b>${properties.country}</b> <br /> Bride Price: <i>$${properties.bride_price_usd}</i>`
+                `<b class="text-purple-400">${properties.country}</b> <br /> Bride Price: <i>$${properties.bride_price_usd}</i>`
               }
-            />
+            />}
           </div>
 
           <CountryDetails country={selectedCountry} />

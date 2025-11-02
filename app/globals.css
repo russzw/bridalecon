@@ -1,9 +1,41 @@
-@import "tailwindcss/preflight";
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
-/* Optional: Custom font or overrides */
-body {
-  background-color: #000;
-  color: #fff;
-  font-weight: bold;
+@layer base {
+  body {
+    @apply bg-black text-lilac-200;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif text-purple-400;
+}
+
+h1 {
+  @apply text-3xl md:text-4xl mb-8;
+}
+
+h2 {
+  @apply text-2xl md:text-3xl mb-6;
+}
+
+h3 {
+  @apply text-xl md:text-2xl mb-4;
+}
+
+p {
+  @apply text-base md:text-lg text-gray-300 mb-4 leading-relaxed;
+}
+
+/* Add responsive styles for smaller screens */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
 }

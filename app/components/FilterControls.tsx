@@ -23,18 +23,18 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   allRegions,
 }) => {
   return (
-    <div className="mb-8 p-4 rounded-lg bg-gray-800 shadow-lg">
-      <div className="flex flex-wrap items-center gap-4">
+    <div className="mb-8 p-4 rounded-lg bg-purple-900 shadow-lg">
+      <div className="flex flex-col md:flex-row items-center gap-4">
         <input
           type="text"
           placeholder="Search countries..."
-          className="p-2 rounded bg-gray-700 text-white flex-grow"
+          className="p-2 rounded bg-purple-800 text-lilac-200 flex-grow w-full md:w-auto"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <div className="flex gap-4">
+        <div className="flex gap-4 w-full md:w-auto">
           <select
-            className="p-2 rounded bg-gray-700 text-white"
+            className="p-2 rounded bg-purple-800 text-lilac-200 w-full"
             value={regionFilter}
             onChange={(e) => setRegionFilter(e.target.value)}
           >
@@ -46,14 +46,14 @@ const FilterControls: React.FC<FilterControlsProps> = ({
             ))}
           </select>
           <select
-            className="p-2 rounded bg-gray-700 text-white"
+            className="p-2 rounded bg-purple-800 text-lilac-200 w-full"
             value={priceFilter}
             onChange={(e) => setPriceFilter(e.target.value)}
           >
             <option value="">All Prices</option>
             <option value="low">Low ($0 - $1000)</option>
             <option value="medium">Medium ($1001 - $5000)</option>
-            <option value="high">High ($5000)</option>
+            <option value="high">High (+$5000)</option>
           </select>
         </div>
       </div>

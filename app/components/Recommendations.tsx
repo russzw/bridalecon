@@ -33,20 +33,20 @@ const Recommendations: React.FC<RecommendationsProps> = ({ priceFilter, regionFi
   }, [priceFilter, regionFilter]);
 
   return (
-    <div className="mt-8 p-6 rounded-lg bg-gray-800 shadow-lg">
-      <h2 className="text-3xl font-bold mb-6 text-yellow-400 font-serif underline">AI-Powered Recommendations</h2>
+    <div className="mt-8 p-6 rounded-lg bg-purple-900 shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 text-purple-400 font-serif underline">Key Notes</h2>
       {loading ? (
-        <p className="text-gray-400 font-sans">Loading recommendations...</p>
+        <p className="text-lilac-300 font-sans">Loading recommendations...</p>
       ) : recommendations.length > 0 ? (
         <ul className="space-y-4">
           {recommendations.map((rec, index) => (
-            <li key={index} className="bg-gray-700 p-4 rounded-lg shadow-md">
-              <p className="text-gray-300 font-sans leading-relaxed">{rec}</p>
+            <li key={index} className="bg-purple-800 p-4 rounded-lg shadow-md">
+              <p className="text-lilac-200 font-sans leading-relaxed break-words">{rec}</p>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-gray-400 font-sans">No recommendations available for the current filters.</p>
+        <p className="text-lilac-300 font-sans">No recommendations available for the current filters.</p>
       )}
     </div>
   );
