@@ -699,9 +699,6 @@ video {
 .h-5 {
   height: 1.25rem;
 }
-.h-\[600px\] {
-  height: 600px;
-}
 .h-auto {
   height: auto;
 }
@@ -1143,10 +1140,6 @@ p {
 
   .md\:hidden {
     display: none;
-  }
-
-  .md\:h-\[800px\] {
-    height: 800px;
   }
 
   .md\:grid-cols-2 {

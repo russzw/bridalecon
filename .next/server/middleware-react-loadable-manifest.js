@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{\"app/components/GlobeSection.tsx -> react-globe.gl\":{\"id\":\"app/components/GlobeSection.tsx -> react-globe.gl\",\"files\":[\"static/chunks/_app-pages-browser_node_modules_react-globe_gl_dist_react-globe_gl_mjs.js\"]}}"
+self.__REACT_LOADABLE_MANIFEST="{\"app/components/GlobeSection.tsx -> ./GlobeWrapper\":{\"id\":\"app/components/GlobeSection.tsx -> ./GlobeWrapper\",\"files\":[\"static/chunks/_app-pages-browser_app_components_GlobeWrapper_tsx.js\"]}}"

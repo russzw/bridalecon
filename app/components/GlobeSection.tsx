@@ -2,7 +2,7 @@
 // app/components/GlobeSection.tsx
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import useResizeObserver from "use-resize-observer";
 import bridePriceData from "../data/bride-price-data.json";
@@ -10,13 +10,15 @@ import CountryDetails from "./CountryDetails";
 import Recommendations from "./Recommendations";
 import Contributions from "./Contributions";
 import Loading from "./Loading";
+import { GlobeMethods } from "react-globe.gl";
 
-const Globe = dynamic(() => import("react-globe.gl"), { 
+const GlobeWrapper = dynamic(() => import("./GlobeWrapper"), { 
   ssr: false,
   loading: () => <Loading />
 });
 
 const GlobeSection = ({ search }: { search: string | null }) => {
+  const globeEl = useRef<GlobeMethods | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<any>(null);
   const [regionFilter, setRegionFilter] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
@@ -107,7 +109,10 @@ const GlobeSection = ({ search }: { search: string | null }) => {
 
         <div className="flex flex-col items-center gap-12 mb-12">
           <div className="w-full h-auto aspect-square max-w-full max-h-[700px] rounded-lg overflow-hidden shadow-2xl bg-gray-900" ref={ref}>
-            {isLoading ? <Loading /> : <Globe
+            {isLoading ? <Loading /> : <GlobeWrapper
+              onRefChange={(instance) => {
+                globeEl.current = instance;
+              }}
               width={width}
               height={height}
               globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
@@ -121,7 +126,11 @@ const GlobeSection = ({ search }: { search: string | null }) => {
               polygonLabel={({ properties }: any) =>
                 `<b class=\"text-purple-400\">${properties.country}</b> <br /> Bride Price: <i>$${properties.bride_price_usd}</i>`
               }
-              pointOfView={{ lat: 0, lng: 0, altitude: 1.8 }}
+              onGlobeReady={() => {
+                if(globeEl.current) {
+                  globeEl.current.pointOfView({ lat: 0, lng: 0, altitude: 1.8 });
+                }
+              }}
             />}
           </div>
 
