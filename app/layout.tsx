@@ -1,4 +1,3 @@
-
 // app/layout.tsx
 
 import './globals.css';
@@ -9,8 +8,8 @@ import { Analytics } from '@vercel/analytics/react';
 
 import { Roboto } from 'next/font/google';
 
-const roboto = Roboto({ 
-  subsets: ['latin'], 
+const roboto = Roboto({
+  subsets: ['latin'],
   weight: '400',
   variable: '--font-roboto',
 });

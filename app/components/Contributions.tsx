@@ -1,4 +1,3 @@
-
 // app/components/Contributions.tsx
 
 import { FaEnvelope, FaGithub } from 'react-icons/fa';
