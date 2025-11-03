@@ -35,7 +35,6 @@ const GlobeSection = ({ search }: { search: string | null }) => {
       });
   }, []);
 
-
   const processedData = useMemo(() => {
     if (!countriesData.features.length) return [];
 
@@ -107,7 +106,7 @@ const GlobeSection = ({ search }: { search: string | null }) => {
         <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-purple-400">Bridal Economics Explorer</h1>
 
         <div className="flex flex-col items-center gap-12 mb-12">
-          <div className="w-full h-[600px] md:h-[800px] rounded-lg overflow-hidden shadow-2xl bg-gray-900" ref={ref}>
+          <div className="w-full h-auto aspect-square max-w-full max-h-[700px] rounded-lg overflow-hidden shadow-2xl bg-gray-900" ref={ref}>
             {isLoading ? <Loading /> : <Globe
               width={width}
               height={height}
@@ -120,8 +119,9 @@ const GlobeSection = ({ search }: { search: string | null }) => {
               polygonStrokeColor={() => "#111"}
               onPolygonClick={handleCountryClick}
               polygonLabel={({ properties }: any) =>
-                `<b class="text-purple-400">${properties.country}</b> <br /> Bride Price: <i>$${properties.bride_price_usd}</i>`
+                `<b class=\"text-purple-400\">${properties.country}</b> <br /> Bride Price: <i>$${properties.bride_price_usd}</i>`
               }
+              pointOfView={{ lat: 0, lng: 0, altitude: 1.8 }}
             />}
           </div>
 

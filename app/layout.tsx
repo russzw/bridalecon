@@ -5,6 +5,7 @@ import './globals.css';
 import { ReactNode } from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import { Analytics } from '@vercel/analytics/react';
 
 import { Roboto } from 'next/font/google';
 
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
