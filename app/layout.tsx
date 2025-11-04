@@ -18,8 +18,9 @@ const roboto = Roboto({
 export const metadata = {
   title: 'Bridal Economics Explorer',
   description: 'Visualizing bride price data globally',
-  viewport: 'width=device-width, initial-scale=1',
 };
+
+export const viewport = 'width=device-width, initial-scale=1';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

@@ -9,6 +9,7 @@ import CountryDetails from "./CountryDetails";
 import Recommendations from "./Recommendations";
 import Contributions from "./Contributions";
 import Loading from "./Loading";
+import FilterControls from "./FilterControls";
 
 const Globe = dynamic(() => import("react-globe.gl"), {
   ssr: false,
@@ -131,6 +132,13 @@ const GlobeSection = ({ search }: { search: string | null }) => {
         </h1>
 
         <div className="flex flex-col items-center gap-12 mb-12">
+          <FilterControls
+            priceFilter={priceFilter}
+            setPriceFilter={setPriceFilter}
+            regionFilter={regionFilter}
+            setRegionFilter={setRegionFilter}
+          />
+
           <div
             className="w-full h-auto aspect-square max-w-full max-h-[700px] rounded-lg overflow-hidden shadow-2xl bg-gray-900"
             ref={ref}
