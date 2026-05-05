@@ -1,6 +1,7 @@
 // app/components/FilterControls.tsx
 "use client";
 import React from "react";
+import { Filter } from "lucide-react";
 
 interface FilterControlsProps {
   priceFilter: string;
@@ -16,30 +17,38 @@ const FilterControls: React.FC<FilterControlsProps> = ({
   setRegionFilter,
 }) => {
   return (
-    <div className="flex flex-row gap-2 p-2 mb-8 rounded-lg bg-purple-900 shadow-lg">
-      <select
-        id="region-filter"
-        value={regionFilter}
-        onChange={(e) => setRegionFilter(e.target.value)}
-        className="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5"
-      >
-        <option value="">All Regions</option>
-        <option value="Africa">Africa</option>
-        <option value="Asia">Asia</option>
-        <option value="Europe">Europe</option>
-        <option value="Oceania">Oceania</option>
-      </select>
-      <select
-        id="price-filter"
-        value={priceFilter}
-        onChange={(e) => setPriceFilter(e.target.value)}
-        className="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5"
-      >
-        <option value="">All Prices</option>
-        <option value="low">Low ( &lt; $1,000)</option>
-        <option value="medium">Medium ($1,000 - $5,000)</option>
-        <option value="high">High ( &gt; $5,000)</option>
-      </select>
+    <div className="glass p-2 flex flex-col sm:flex-row items-center gap-3 w-full max-w-xl">
+      <div className="flex items-center gap-2 px-3 text-[hsl(var(--text-muted))] shrink-0">
+        <Filter className="w-4 h-4" />
+        <span className="text-xs font-semibold uppercase tracking-wider">Filter By</span>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-2 w-full">
+        <select
+          id="region-filter"
+          value={regionFilter}
+          onChange={(e) => setRegionFilter(e.target.value)}
+          className="bg-[hsl(var(--surface-overlay))] border border-[hsl(var(--border))] text-[hsl(var(--text-primary))] text-sm rounded-xl focus:ring-2 focus:ring-[hsl(var(--brand-500)/0.4)] focus:outline-none block w-full p-2.5 transition-all appearance-none cursor-pointer hover:bg-[hsl(var(--surface-elevated))]"
+        >
+          <option value="">All Regions</option>
+          <option value="Africa">Africa</option>
+          <option value="Asia">Asia</option>
+          <option value="Europe">Europe</option>
+          <option value="Oceania">Oceania</option>
+        </select>
+        
+        <select
+          id="price-filter"
+          value={priceFilter}
+          onChange={(e) => setPriceFilter(e.target.value)}
+          className="bg-[hsl(var(--surface-overlay))] border border-[hsl(var(--border))] text-[hsl(var(--text-primary))] text-sm rounded-xl focus:ring-2 focus:ring-[hsl(var(--brand-500)/0.4)] focus:outline-none block w-full p-2.5 transition-all appearance-none cursor-pointer hover:bg-[hsl(var(--surface-elevated))]"
+        >
+          <option value="">All Prices</option>
+          <option value="low">Low (&lt; $1k)</option>
+          <option value="medium">Medium ($1k - $5k)</option>
+          <option value="high">High (&gt; $5k)</option>
+        </select>
+      </div>
     </div>
   );
 };

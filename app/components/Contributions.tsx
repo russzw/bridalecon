@@ -1,33 +1,53 @@
 // app/components/Contributions.tsx
-
-import { FaEnvelope, FaGithub } from 'react-icons/fa';
+"use client";
+import React from "react";
+import { Mail, Github, Users, Plus } from "lucide-react";
+import { Button } from "./ui/Button";
+import { Card, CardContent } from "./ui/Card";
 
 const Contributions = () => {
   return (
-    <div className="p-6 bg-purple-900 rounded-lg shadow-inner mt-12">
-      <h2 className="text-3xl font-bold mb-6 text-purple-400 font-serif underline">Contribute to the Project</h2>
-      <p className="text-lg mb-6 font-light text-lilac-200">
-        This project is open source and we welcome contributions. If you have data for a country not yet included, or if you have corrections to the existing data, please feel free to contribute.
-      </p>
-      <div className="flex flex-col sm:flex-row gap-6">
-        <a
-          href="mailto:russellmutamba@protonmail.com"
-          className="flex items-center justify-center bg-lilac-200 hover:bg-lilac-300 text-black font-bold py-4 px-8 rounded-lg transition duration-300 ease-in-out text-center text-xl"
-        >
-          <FaEnvelope className="h-5 w-5 mr-3" />
-          Contribute via Email
-        </a>
-        <a
-          href="https://github.com/russzw/bridalecon"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded transition duration-300 ease-in-out text-center"
-        >
-          <FaGithub className="h-4 w-4 mr-2" />
-          View on GitHub
-        </a>
-      </div>
-    </div>
+    <Card className="bg-[hsl(var(--brand-900)/0.03)] border-dashed border-2 overflow-hidden">
+      <CardContent className="p-8 sm:p-12">
+        <div className="flex flex-col md:flex-row items-center gap-12">
+          <div className="flex-1">
+            <div className="w-12 h-12 rounded-2xl bg-[hsl(var(--brand-500))] flex items-center justify-center text-white mb-6 shadow-glow-sm">
+              <Users className="w-6 h-6" />
+            </div>
+            <h2 className="text-3xl font-serif font-bold text-[hsl(var(--text-primary))] mb-4">
+              Contribute to the Archive
+            </h2>
+            <p className="text-[hsl(var(--text-secondary))] leading-relaxed mb-8 max-w-xl">
+              BridalEcon is an open-source project dedicated to documenting marriage customs accurately. 
+              Have data for a missing country or corrections to existing profiles? Join our effort to build the most comprehensive database of bridal economics.
+            </p>
+            
+            <div className="flex flex-wrap gap-4">
+              <a href="mailto:russellmutamba@protonmail.com">
+                <Button size="lg" icon={<Mail className="w-4 h-4" />}>
+                  Contribute via Email
+                </Button>
+              </a>
+              <a href="https://github.com/russzw/bridalecon" target="_blank" rel="noopener noreferrer">
+                <Button variant="secondary" size="lg" icon={<Github className="w-4 h-4" />}>
+                  View on GitHub
+                </Button>
+              </a>
+            </div>
+          </div>
+          
+          <div className="hidden lg:block w-64 h-64 shrink-0">
+             <div className="relative w-full h-full border border-[hsl(var(--border))] rounded-3xl bg-[hsl(var(--surface-overlay))] flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-brand opacity-5" />
+                <Plus className="w-16 h-16 text-[hsl(var(--brand-500))] opacity-20" />
+                <div className="absolute bottom-4 left-4 right-4 h-2 bg-[hsl(var(--brand-500)/0.1)] rounded-full overflow-hidden">
+                   <div className="h-full w-2/3 bg-[hsl(var(--brand-500))] animate-pulse" />
+                </div>
+             </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

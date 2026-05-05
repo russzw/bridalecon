@@ -1,7 +1,7 @@
 # BridalEcon — Roadmap (Milestone 1)
 
 ## Phase 1 — Design System & Theming Foundation
-**Status:** `[ ] Not Started`
+**Status:** `[x] Completed`
 
 ### Plans
 - **Plan 1.1** — Setup next-themes and ThemeProvider.
@@ -10,16 +10,16 @@
 - **Plan 1.4** — Implement ThemeToggle.
 
 ## Phase 2 — Layout Redesign
-**Status:** `[ ] Not Started`
+**Status:** `[x] Completed`
 
 ## Phase 3 — Globe Upgrade
-**Status:** `[ ] Not Started`
+**Status:** `[x] Completed`
 
 ## Phase 4 — Country Profiles & Data
-**Status:** `[ ] Not Started`
+**Status:** `[x] Completed`
 
-## Phase 5 — AI Engine (Recs + Chat)
-**Status:** `[ ] Not Started`
+## Phase 5 — AI & Insights
+**Status:** `[x] Completed`
 
 ## Phase 6 — Timeline & Content
-**Status:** `[ ] Not Started`
+**Status:** `[x] Completed`

@@ -3,39 +3,84 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --brand-50:  268 100% 98%;
+    --brand-100: 268 100% 95%;
+    --brand-200: 268 90%  88%;
+    --brand-300: 268 80%  75%;
+    --brand-400: 268 72%  62%;
+    --brand-500: 268 65%  50%;
+    --brand-600: 268 70%  40%;
+    --brand-700: 268 75%  30%;
+    --brand-800: 268 80%  20%;
+    --brand-900: 268 85%  12%;
+
+    --surface:          0 0% 99%;
+    --surface-elevated: 0 0% 100%;
+    --surface-overlay:  0 0% 96%;
+
+    --text-primary:   268 15% 10%;
+    --text-secondary: 268 10% 35%;
+    --text-muted:     268 8%  55%;
+
+    --border: 268 15% 88%;
+  }
+
+  .dark {
+    --surface:          268 25% 6%;
+    --surface-elevated: 268 25% 9%;
+    --surface-overlay:  268 20% 12%;
+
+    --text-primary:   268 20% 96%;
+    --text-secondary: 268 15% 72%;
+    --text-muted:     268 10% 50%;
+
+    --border: 268 20% 18%;
+  }
+}
+
+@layer base {
   body {
-    @apply bg-black text-lilac-200;
+    background-color: hsl(var(--surface));
+    color: hsl(var(--text-primary));
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  @apply font-serif text-purple-400;
-}
-
-h1 {
-  @apply text-3xl md:text-4xl mb-8;
-}
-
-h2 {
-  @apply text-2xl md:text-3xl mb-6;
-}
-
-h3 {
-  @apply text-xl md:text-2xl mb-4;
-}
-
-p {
-  @apply text-base md:text-lg text-gray-300 mb-4 leading-relaxed;
-}
-
-/* Add responsive styles for smaller screens */
-@media (max-width: 640px) {
-  .container {
-    padding-left: 1rem;
-    padding-right: 1rem;
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[hsl(var(--brand-500))] to-[hsl(var(--brand-300))];
   }
 
-  h1 {
-    font-size: 2.5rem;
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+
+  .dark .glass {
+    @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-2xl;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

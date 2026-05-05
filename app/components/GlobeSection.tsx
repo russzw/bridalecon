@@ -10,6 +10,12 @@ import Recommendations from "./Recommendations";
 import Contributions from "./Contributions";
 import Loading from "./Loading";
 import FilterControls from "./FilterControls";
+import GlobeLegend from "./GlobeLegend";
+import { useTheme } from "next-themes";
+import { Badge } from "./ui/Badge";
+import { Globe2, ArrowRight, BookOpen } from "lucide-react";
+import Link from "next/link";
+import { Button } from "./ui/Button";
 
 const Globe = dynamic(() => import("react-globe.gl"), {
   ssr: false,
@@ -18,13 +24,14 @@ const Globe = dynamic(() => import("react-globe.gl"), {
 
 const GlobeSection = ({ search }: { search: string | null }) => {
   const globeRef = useRef<any>(null);
+  const { resolvedTheme } = useTheme();
   const [selectedCountry, setSelectedCountry] = useState<any>(null);
   const [regionFilter, setRegionFilter] = useState("");
   const [priceFilter, setPriceFilter] = useState("");
   const [countriesData, setCountriesData] = useState<any>({ features: [] });
   const [isLoading, setIsLoading] = useState(true);
 
-  const { ref, width = 800, height = 800 } = useResizeObserver<HTMLDivElement>();
+  const { ref, width = 800, height = 600 } = useResizeObserver<HTMLDivElement>();
 
   // Load countries
   useEffect(() => {
@@ -46,7 +53,7 @@ const GlobeSection = ({ search }: { search: string | null }) => {
       countryBridePrice[d.country] = d;
     });
 
-    const featuresWithData = countriesData.features
+    return countriesData.features
       .map((feature: any) => {
         const countryData = countryBridePrice[feature.properties.ADMIN];
         if (countryData) {
@@ -57,8 +64,6 @@ const GlobeSection = ({ search }: { search: string | null }) => {
         return null;
       })
       .filter(Boolean);
-
-    return featuresWithData;
   }, [countriesData]);
 
   const filteredData = useMemo(() => {
@@ -92,18 +97,35 @@ const GlobeSection = ({ search }: { search: string | null }) => {
   const maxBridePrice = Math.max(...bridePriceData.map((d) => d.bride_price_usd));
 
   const getColorByPrice = (price: number) => {
-    if (price === 0) return "#4A4A4A";
+    if (price === 0) return resolvedTheme === "dark" ? "#2d2d3f" : "#e2e8f0";
+    
     const normalizedPrice = price / maxBridePrice;
-    if (normalizedPrice <= 0.2) return "#E6E6FA";
-    if (normalizedPrice <= 0.5) return "#D8BFD8";
-    if (normalizedPrice <= 0.8) return "#8A2BE2";
-    return "#4B0082";
+    
+    // Theme-aware color scale
+    if (resolvedTheme === "dark") {
+      if (normalizedPrice <= 0.2) return "#E6E6FA";
+      if (normalizedPrice <= 0.5) return "#D8BFD8";
+      if (normalizedPrice <= 0.8) return "#8A2BE2";
+      return "#4B0082";
+    } else {
+      if (normalizedPrice <= 0.2) return "#c4b5fd";
+      if (normalizedPrice <= 0.5) return "#8b5cf6";
+      if (normalizedPrice <= 0.8) return "#5b21b6";
+      return "#3b0764";
+    }
   };
 
   const handleCountryClick = (polygon: any) => {
     setSelectedCountry(polygon.properties);
 
-    // Smoothly center camera on the clicked country
+    // Scroll to details section
+    setTimeout(() => {
+      const detailsSection = document.getElementById("country-details");
+      if (detailsSection) {
+        detailsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100);
+
     if (globeRef.current && polygon.properties?.latitude && polygon.properties?.longitude) {
       globeRef.current.pointOfView(
         {
@@ -116,69 +138,139 @@ const GlobeSection = ({ search }: { search: string | null }) => {
     }
   };
 
-  // Set initial point of view
   useEffect(() => {
     if (globeRef.current) {
-      const altitude = width < 768 ? 3.5 : 1.8;
-      globeRef.current.pointOfView({ lat: 0, lng: 0, altitude }, 1500);
+      const altitude = width < 768 ? 2.8 : 1.8;
+      globeRef.current.pointOfView({ lat: 20, lng: 0, altitude }, 1500);
     }
   }, [width]);
 
   return (
-    <section className="p-4 bg-black text-lilac-200 min-h-screen">
-      <div className="container mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold text-center mb-12 text-purple-400">
-          Bridal Economics Explorer
-        </h1>
+    <div className="flex flex-col items-center w-full bg-transparent">
+      {/* Hero Header Section */}
+      <section className="relative w-full pt-20 pb-12 px-4 sm:px-6 lg:px-8 text-center overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none opacity-20 -z-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[hsl(var(--brand-500))] rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-[hsl(var(--brand-900))] rounded-full blur-[120px]" />
+        </div>
 
-        <div className="flex flex-col items-center gap-12 mb-12">
-          <FilterControls
-            priceFilter={priceFilter}
-            setPriceFilter={setPriceFilter}
-            regionFilter={regionFilter}
-            setRegionFilter={setRegionFilter}
-          />
+        <div className="max-w-4xl mx-auto">
+          <Badge variant="default" className="mb-6 animate-fade-in inline-flex items-center">
+            <Globe2 className="w-3 h-3 mr-1" />
+            Global Ethnographic Data Explorer
+          </Badge>
+          
+          <h1 className="text-display-lg sm:text-display-xl font-serif font-bold text-[hsl(var(--text-primary))] mb-6 tracking-tight animate-slide-up">
+            The Economics of <br className="hidden sm:block" />
+            <span className="text-gradient">Bridal Traditions</span>
+          </h1>
+          
+          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-[hsl(var(--text-secondary))] mb-10 leading-relaxed animate-slide-up [animation-delay:100ms]">
+            Explore the complex world of bride price, lobola, and marriage customs through data-driven visualization and cultural analysis.
+          </p>
 
-          <div
-            className="w-full h-auto aspect-square max-w-full max-h-[700px] rounded-lg overflow-hidden shadow-2xl bg-gray-900"
-            ref={ref}
-          >
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <Globe
-                ref={globeRef}
-                width={width}
-                height={height}
-                globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-                backgroundColor="rgba(0,0,0,0)"
-                polygonsData={filteredData}
-                polygonAltitude={0.06}
-                polygonCapColor={(d: any) => getColorByPrice(d.properties.bride_price_usd)}
-                polygonSideColor={() => "rgba(138, 43, 226, 0.15)"}
-                polygonStrokeColor={() => "#111"}
-                onPolygonClick={handleCountryClick}
-                polygonLabel={({ properties }: any) =>
-                  `<b class='text-purple-400'>${properties.country}</b><br />Bride Price: <i>$${properties.bride_price_usd}</i>`
-                }
-              />
-            )}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-slide-up [animation-delay:200ms]">
+            <FilterControls
+              priceFilter={priceFilter}
+              setPriceFilter={setPriceFilter}
+              regionFilter={regionFilter}
+              setRegionFilter={setRegionFilter}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Interactive Globe Section - The Hero Visual */}
+      <div className="w-full relative px-4 sm:px-6 lg:px-8 max-w-[1400px]">
+        <div 
+          className="relative w-full aspect-[21/9] sm:aspect-[21/9] min-h-[400px] sm:min-h-[600px] rounded-[2rem] overflow-hidden border border-[hsl(var(--border))] bg-black/20 backdrop-blur-sm shadow-2xl group"
+          ref={ref}
+        >
+          {/* Overlays */}
+          <div className="absolute top-8 left-8 z-10 hidden sm:block">
+            <GlobeLegend />
           </div>
 
+          <div className="absolute bottom-8 right-8 z-10 flex flex-col gap-2">
+            <button 
+              onClick={() => globeRef.current?.pointOfView({ altitude: 2.5 }, 1000)}
+              className="glass p-3 rounded-xl hover:bg-[hsl(var(--brand-500)/0.2)] transition-colors text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--brand-500))]"
+              title="Zoom Out"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" /></svg>
+            </button>
+            <button 
+              onClick={() => globeRef.current?.pointOfView({ altitude: 0.5 }, 1000)}
+              className="glass p-3 rounded-xl hover:bg-[hsl(var(--brand-500)/0.2)] transition-colors text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--brand-500))]"
+              title="Zoom In"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+            </button>
+          </div>
+
+          {isLoading ? (
+            <div className="absolute inset-0 flex items-center justify-center bg-[hsl(var(--surface)/0.5)]">
+               <div className="flex flex-col items-center gap-4">
+                 <div className="w-12 h-12 border-4 border-[hsl(var(--brand-500))] border-t-transparent rounded-full animate-spin" />
+                 <p className="text-[hsl(var(--text-secondary))] font-medium">Loading World Data...</p>
+               </div>
+            </div>
+          ) : (
+            <Globe
+              ref={globeRef}
+              width={width}
+              height={height}
+              globeImageUrl={resolvedTheme === "dark" 
+                ? "//unpkg.com/three-globe/example/img/earth-night.jpg"
+                : "//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+              }
+              backgroundColor="rgba(0,0,0,0)"
+              polygonsData={filteredData}
+              polygonAltitude={0.02}
+              polygonCapColor={(d: any) => getColorByPrice(d.properties.bride_price_usd)}
+              polygonSideColor={() => "rgba(138, 43, 226, 0.15)"}
+              polygonStrokeColor={() => (resolvedTheme === "dark" ? "#111" : "#fff")}
+              onPolygonClick={handleCountryClick}
+              polygonLabel={({ properties }: any) => `
+                <div class="glass p-4 rounded-xl text-xs shadow-2xl border border-[hsl(var(--border))] min-w-[200px]">
+                  <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-[hsl(var(--brand-500))] animate-pulse"></div>
+                    <b class="text-[hsl(var(--text-primary))] text-sm">${properties.country}</b>
+                  </div>
+                  <div class="flex flex-col gap-2 text-[hsl(var(--text-secondary))]">
+                    <div class="flex justify-between items-center">
+                      <span>Region</span>
+                      <span class="text-[hsl(var(--text-primary))] font-medium">${properties.region}</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2 border-t border-[hsl(var(--border))]">
+                      <span>Avg. Bride Price</span>
+                      <span class="text-[hsl(var(--brand-500))] font-bold text-base">$${properties.bride_price_usd.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+              `}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Country Info Section - Now clearly visible below the globe */}
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-24">
+        {/* Country Details Card */}
+        <div id="country-details" className="scroll-mt-24">
           <CountryDetails country={selectedCountry} />
         </div>
 
-        <div className="mb-12">
-          <Recommendations
-            priceFilter={priceFilter}
-            regionFilter={regionFilter}
-            selectedCountry={selectedCountry}
-          />
-        </div>
-
+        {/* Recommendations and Contributions */}
+        <Recommendations
+          priceFilter={priceFilter}
+          regionFilter={regionFilter}
+          selectedCountry={selectedCountry}
+        />
         <Contributions />
       </div>
-    </section>
+    </div>
   );
 };
 

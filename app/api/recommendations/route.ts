@@ -4,14 +4,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import bridePriceData from '../../data/bride-price-data.json';
 
-// Initialize the Google Generative AI client with the API key from environment variables
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
+// Initialize the Google Generative AI client
+const apiKey = process.env.GEMINI_API_KEY;
+const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 
 const getAIRecommendations = async (
   priceFilter: string | null,
   regionFilter: string | null,
   selectedCountry: string | null
 ): Promise<string[]> => {
+  if (!genAI) {
+    throw new Error("API_KEY_MISSING");
+  }
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const prompt = `

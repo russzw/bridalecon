@@ -4,35 +4,51 @@ import './globals.css';
 import { ReactNode } from 'react';
 import Navbar from '@/app/components/Navbar';
 import Footer from '@/app/components/Footer';
+import AIChat from '@/app/components/AIChat';
 import { Analytics } from '@vercel/analytics/react';
+import { ThemeProvider } from '@/app/components/ThemeProvider';
+import { Inter, Playfair_Display } from 'next/font/google';
 
-import { Roboto } from 'next/font/google';
-
-const roboto = Roboto({
+const inter = Inter({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-roboto',
+  variable: '--font-inter',
+  display: 'swap',
 });
 
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
 
 export const metadata = {
-  title: 'Bridal Economics Explorer',
-  description: 'Visualizing bride price data globally',
+  title: 'BridalEcon — Bride Price Economics Explorer',
+  description: 'A data-driven exploration of bride price practices around the world.',
 };
 
-export const viewport = 'width=device-width, initial-scale=1';
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${roboto.variable} font-sans bg-black text-lilac-200`}>
-
-        <Navbar />
-        <main className="min-h-screen max-w-7xl mx-auto px-4 py-8">
-          {children}
-        </main>
-        <Footer />
-        <Analytics />
+    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${playfair.variable}`}>
+      <body className="font-sans bg-[hsl(var(--surface))] text-[hsl(var(--text-primary))] antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main id="main-content" className="min-h-[calc(100dvh-4rem)]">
+            {children}
+          </main>
+          <AIChat />
+          <Footer />
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );
