@@ -4,12 +4,12 @@
 import GoBackButton from "../components/GoBackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
 import { Badge } from "../components/ui/Badge";
-import { 
-  BookOpen, 
-  Target, 
-  ShieldCheck, 
-  Database, 
-  Info, 
+import {
+  BookOpen,
+  Target,
+  ShieldCheck,
+  Database,
+  Info,
   Users,
   Lightbulb,
   Scale
@@ -19,7 +19,7 @@ const AboutPage = () => {
   return (
     <div className="section min-h-screen max-w-4xl mx-auto">
       <GoBackButton />
-      
+
       <div className="mb-16">
         <Badge variant="default" className="mb-4">
           <BookOpen className="w-3 h-3 mr-1" />
@@ -29,7 +29,7 @@ const AboutPage = () => {
           Understanding Bridal Economics
         </h1>
         <p className="text-xl text-[hsl(var(--text-secondary))] leading-relaxed">
-          BridalEcon is a research-driven platform dedicated to exploring the complex intersection of tradition, 
+          BridalEcon is a research-driven platform dedicated to exploring the complex intersection of tradition,
           economics, and human rights through the lens of bride price customs.
         </p>
       </div>
@@ -44,12 +44,12 @@ const AboutPage = () => {
           <Card>
             <CardContent className="p-8 text-[hsl(var(--text-secondary))] leading-relaxed space-y-4">
               <p>
-                The concept of bride price—be it lobola, caili, or mahr—is often misunderstood through purely 
-                mercantile or purely traditionalist lenses. Our mission is to provide a nuanced, data-driven 
+                The concept of bride price—be it lobola, caili, or mahr—is often misunderstood through purely
+                mercantile or purely traditionalist lenses. Our mission is to provide a nuanced, data-driven
                 overview that respects cultural heritage while highlighting modern socio-economic implications.
               </p>
               <p>
-                We aim to foster a global dialogue that recognizes the value of these traditions in community 
+                We aim to foster a global dialogue that recognizes the value of these traditions in community
                 building while remaining vigilant about the ethical challenges posed by commodification.
               </p>
             </CardContent>
@@ -68,7 +68,7 @@ const AboutPage = () => {
                 <CardTitle className="text-lg">Data Aggregation</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-[hsl(var(--text-secondary))]">
-                Our database is compiled from a variety of sources, including national ethnographic surveys, 
+                Our database is compiled from a variety of sources, including national ethnographic surveys,
                 academic research papers, and reported market averages from regional cultural archives.
               </CardContent>
             </Card>
@@ -77,7 +77,7 @@ const AboutPage = () => {
                 <CardTitle className="text-lg">Valuation Logic</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-[hsl(var(--text-secondary))]">
-                Where payments are made in livestock or goods, we apply current market conversion rates to 
+                Where payments are made in livestock or goods, we apply current market conversion rates to
                 provide a standardized USD estimate, while noting the inherent symbolic value that cash cannot capture.
               </CardContent>
             </Card>
@@ -100,7 +100,7 @@ const AboutPage = () => {
                   <div>
                     <h3 className="font-bold mb-1">Cultural Sensitivity</h3>
                     <p className="text-sm text-[hsl(var(--text-secondary))]">
-                      We treat all traditions with the utmost respect, acknowledging that for many, these practices 
+                      We treat all traditions with the utmost respect, acknowledging that for many, these practices
                       are not &quot;purchases&quot; but sacred commitments between families.
                     </p>
                   </div>
@@ -112,7 +112,7 @@ const AboutPage = () => {
                   <div>
                     <h3 className="font-bold mb-1">Human Rights Lens</h3>
                     <p className="text-sm text-[hsl(var(--text-secondary))]">
-                      We provide a platform for critical analysis of practices that may infringe upon individual 
+                      We provide a platform for critical analysis of practices that may infringe upon individual
                       autonomy or exacerbate gender inequality.
                     </p>
                   </div>
@@ -129,31 +129,31 @@ const AboutPage = () => {
             <h2 className="text-2xl font-serif font-bold">The Team</h2>
           </div>
           <p className="text-[hsl(var(--text-secondary))] leading-relaxed mb-8">
-            BridalEcon is an open-source initiative maintained by a global collective of developers, 
-            sociologists, and cultural enthusiasts. We are constantly looking for data contributors 
+            BridalEcon is an open-source initiative maintained by a global collective of developers,
+            sociologists, and cultural enthusiasts. We are constantly looking for data contributors
             and peer reviewers to ensure the accuracy of our archive.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
             <div className="p-4 rounded-2xl bg-[hsl(var(--surface-overlay))] border border-[hsl(var(--border))]">
-               <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">Lead</div>
-               <div className="font-medium">dev🔥russ</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">Lead</div>
+              <div className="font-medium">dev🔥russ</div>
             </div>
             <div className="p-4 rounded-2xl bg-[hsl(var(--surface-overlay))] border border-[hsl(var(--border))]">
-               <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">UI/UX</div>
-               <div className="font-medium">AI Agent</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">UI/UX</div>
+              <div className="font-medium">dev🔥russ</div>
             </div>
             <div className="p-4 rounded-2xl bg-[hsl(var(--surface-overlay))] border border-[hsl(var(--border))]">
-               <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">Research</div>
-               <div className="font-medium">Community</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">Research</div>
+              <div className="font-medium">Community</div>
             </div>
             <div className="p-4 rounded-2xl bg-[hsl(var(--surface-overlay))] border border-[hsl(var(--border))]">
-               <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">Data</div>
-               <div className="font-medium">Open-Source</div>
+              <div className="text-xs font-bold uppercase tracking-widest text-[hsl(var(--brand-500))] mb-1">Data</div>
+              <div className="font-medium">Open-Source</div>
             </div>
           </div>
         </section>
       </div>
-      
+
       <div className="mt-24 pt-12 border-t border-[hsl(var(--border))] text-center">
         <p className="text-sm text-[hsl(var(--text-muted))]">
           Last Updated: May 2025 • Version 1.0.0
