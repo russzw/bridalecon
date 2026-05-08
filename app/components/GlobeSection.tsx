@@ -17,10 +17,7 @@ import { Globe2, ArrowRight, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/Button";
 
-const Globe = dynamic(() => import("react-globe.gl"), {
-  ssr: false,
-  loading: () => <Loading />,
-});
+// We'll load the Globe component dynamically in the component to ensure refs work correctly
 
 const GlobeSection = ({ search }: { search: string | null }) => {
   const globeRef = useRef<any>(null);
@@ -30,11 +27,18 @@ const GlobeSection = ({ search }: { search: string | null }) => {
   const [priceFilter, setPriceFilter] = useState("");
   const [countriesData, setCountriesData] = useState<any>({ features: [] });
   const [isLoading, setIsLoading] = useState(true);
+  const [Globe, setGlobe] = useState<any>(null);
+  const hasInitialized = useRef(false);
 
   const { ref, width = 800, height = 600 } = useResizeObserver<HTMLDivElement>();
 
-  // Load countries
+  // Load components and data
   useEffect(() => {
+    // Dynamically import react-globe.gl
+    import("react-globe.gl").then((mod) => {
+      setGlobe(() => mod.default);
+    });
+
     fetch(
       "https://raw.githubusercontent.com/vasturiano/react-globe.gl/master/example/datasets/ne_110m_admin_0_countries.geojson"
     )
@@ -139,11 +143,28 @@ const GlobeSection = ({ search }: { search: string | null }) => {
   };
 
   useEffect(() => {
-    if (globeRef.current) {
+    if (globeRef.current && !hasInitialized.current) {
       const altitude = width < 768 ? 2.8 : 1.8;
       globeRef.current.pointOfView({ lat: 20, lng: 0, altitude }, 1500);
+      hasInitialized.current = true;
     }
   }, [width]);
+
+  const handleZoomIn = () => {
+    if (!globeRef.current) return;
+    const currentPOV = globeRef.current.pointOfView();
+    const currentAltitude = currentPOV?.altitude || 1.8;
+    const newAltitude = Math.max(0.1, currentAltitude * 0.7);
+    globeRef.current.pointOfView({ altitude: newAltitude }, 400);
+  };
+
+  const handleZoomOut = () => {
+    if (!globeRef.current) return;
+    const currentPOV = globeRef.current.pointOfView();
+    const currentAltitude = currentPOV?.altitude || 1.8;
+    const newAltitude = Math.min(10, currentAltitude * 1.4);
+    globeRef.current.pointOfView({ altitude: newAltitude }, 400);
+  };
 
   return (
     <div className="flex flex-col items-center w-full bg-transparent">
@@ -194,26 +215,28 @@ const GlobeSection = ({ search }: { search: string | null }) => {
 
           <div className="absolute bottom-8 right-8 z-10 flex flex-col gap-2">
             <button 
-              onClick={() => globeRef.current?.pointOfView({ altitude: 2.5 }, 1000)}
-              className="glass p-3 rounded-xl hover:bg-[hsl(var(--brand-500)/0.2)] transition-colors text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--brand-500))]"
-              title="Zoom Out"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" /></svg>
-            </button>
-            <button 
-              onClick={() => globeRef.current?.pointOfView({ altitude: 0.5 }, 1000)}
+              onClick={handleZoomIn}
               className="glass p-3 rounded-xl hover:bg-[hsl(var(--brand-500)/0.2)] transition-colors text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--brand-500))]"
               title="Zoom In"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
+            </button>
+            <button 
+              onClick={handleZoomOut}
+              className="glass p-3 rounded-xl hover:bg-[hsl(var(--brand-500)/0.2)] transition-colors text-[hsl(var(--text-secondary))] hover:text-[hsl(var(--brand-500))]"
+              title="Zoom Out"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" /></svg>
             </button>
           </div>
 
-          {isLoading ? (
+          {!Globe || isLoading ? (
             <div className="absolute inset-0 flex items-center justify-center bg-[hsl(var(--surface)/0.5)]">
                <div className="flex flex-col items-center gap-4">
                  <div className="w-12 h-12 border-4 border-[hsl(var(--brand-500))] border-t-transparent rounded-full animate-spin" />
-                 <p className="text-[hsl(var(--text-secondary))] font-medium">Loading World Data...</p>
+                 <p className="text-[hsl(var(--text-secondary))] font-medium">
+                   {!Globe ? "Initializing Engine..." : "Loading World Data..."}
+                 </p>
                </div>
             </div>
           ) : (

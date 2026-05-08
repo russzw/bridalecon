@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import bridePriceData from '../../data/bride-price-data.json';
+import chatFallbacks from '../../data/chat-fallbacks.json';
 
 // Initialize the Google Generative AI client
 const apiKey = process.env.GEMINI_API_KEY;
@@ -74,11 +75,9 @@ const getAIRecommendations = async (
   } catch (error) { 
     console.error("Failed to generate recommendations from Gemini:", error);
     // Return some fallback recommendations in case of an error
-    return [
-      "The bride price is a tradition in many cultures, symbolizing a token of appreciation to the bride's family.",
-      "In some cultures, the bride price is not a single payment but a series of gifts and ceremonies.",
-      "The value of the bride price can vary significantly, even within the same country or region."
-    ];
+    // Return some fallback recommendations in case of an error or missing key
+    const shuffled = [...chatFallbacks].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 3);
   }
 };
 
